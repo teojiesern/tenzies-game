@@ -1,9 +1,23 @@
 import React from "react"
-import Die from "./Die"
+import Confetti from "react-confetti"
+import useWindowSize from 'react-use/lib/useWindowSize'
 
 export default function App(){
   const [die, setDie] = React.useState([])
   const [tenzies, setTenzies] = React.useState(false)
+
+  React.useEffect(() => {
+    let flag = true
+    for(let i=0; i<10; i++){
+      if(die.length === 0 || !die[i].locked){
+        flag = false
+        break
+      }
+    }
+    if(flag){
+      setTenzies(flag)
+    }
+  },[die])
 
   function rollAll(){
     const tempDie = []
@@ -15,7 +29,24 @@ export default function App(){
       })
     }
     setDie(tempDie)
-    console.log(dices)
+    setTenzies(false)
+  }
+
+  function rollUnlocked(){
+    let tempDie = []
+    setDie(prevDie => {
+      for(let i=0; i<10; i++){
+        if(prevDie[i].locked){
+          tempDie.push(prevDie[i])
+        }else{
+          tempDie.push({
+            ...prevDie[i],
+            value: generateRandom()
+          })
+        }
+      }
+      return tempDie
+    })
   }
 
   function generateRandom(){
@@ -48,12 +79,16 @@ export default function App(){
     )
   })
 
+  const {width, height} = useWindowSize()
   return (
     <div className="app-container">
       <h1>Tenzies</h1>
       <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice">{dices}</div>
-      <button onClick={rollAll}>{tenzies ? "Start Again" : "Roll"}</button>
+      {die.length === 0 || tenzies ? 
+      <button onClick={rollAll} className="play-button">{tenzies ? "Start Again" : "Start Game"}</button> : 
+      <button onClick={rollUnlocked} className="play-button">Roll</button>}
+      {tenzies && <Confetti width={width-20} height={height-20}/>}
     </div>
   )
 }
