@@ -1,10 +1,12 @@
 import React from "react"
 import Confetti from "react-confetti"
 import useWindowSize from 'react-use/lib/useWindowSize'
+import Timer from "./Timer"
 
 export default function App(){
   const [die, setDie] = React.useState([])
   const [tenzies, setTenzies] = React.useState(false)
+  const [start, setStart] = React.useState(false)
 
   React.useEffect(() => {
     const locked = die.every(dice => dice.locked)
@@ -79,6 +81,8 @@ export default function App(){
   return (
     <div className="app-container">
       <h1>Tenzies</h1>
+      <Timer name="bestTime" start={start}/>
+      <Timer name="currentTime" start={start}/>
       <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice">{dices}</div>
       {die.length === 0 || tenzies ? 
