@@ -7,15 +7,11 @@ export default function App(){
   const [tenzies, setTenzies] = React.useState(false)
 
   React.useEffect(() => {
-    let flag = true
-    for(let i=0; i<10; i++){
-      if(die.length === 0 || !die[i].locked){
-        flag = false
-        break
-      }
-    }
-    if(flag){
-      setTenzies(flag)
+    const locked = die.every(dice => dice.locked)
+    const firstValue = die.length === 0 ? 999 : die[0].value 
+    const sameValue = die.every(dice => dice.value === firstValue)
+    if(locked && sameValue && die.length != 0){
+      setTenzies(true)
     }
   },[die])
 
