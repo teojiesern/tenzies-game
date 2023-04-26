@@ -1,10 +1,37 @@
 body{
   background-color: #0B2434;
+  padding: 20px;
+  font-size: 2.2vw;
 }
 
 .app-container{
-  width: 90vw;
-  height: 88vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 92vh;
   background-color: #F5F5F5;
-  margin: 6vh auto;
+  border-radius: 5px;
+}
+
+.dice{
+  height: 10vh;
+  display: flex;
+  flex-wrap: wrap;
+  width: 85%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.individual-die{
+  box-sizing: border-box;
+  flex-basis: calc(20% - 20px);
+  max-width: 20%;
+  text-align: center;
+  border: 1px solid black;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.locked{
+  background-color: blue;
 }
