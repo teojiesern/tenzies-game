@@ -7,6 +7,7 @@ export default function App(){
   const [die, setDie] = React.useState([])
   const [tenzies, setTenzies] = React.useState(false)
   const [start, setStart] = React.useState(false)
+  let reset = false
 
   React.useEffect(() => {
     const locked = die.every(dice => dice.locked)

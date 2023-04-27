@@ -30,12 +30,16 @@ export default function Timer(props){
 
     React.useEffect(() => {
         localStorage.setItem("pb",JSON.stringify(pb))
+        if(!timerStopped){
+            setTime(0)
+        } 
+        // since timerStopped won't be updated when tenzies is true, this would not reset the timer immediately but would reset the timer on the next run which is if we win the game and we press roll again
     },[timerStopped])
 
     return (
         <div className={props.name}>
             <p>{props.name === "bestTime" ? "Time to beat: " : "Current: "} 
-            {props.name === "bestTime" ? (pb===10000000 ? "No record" : 
+            {props.name === "bestTime" ? (pb === 10000000 ? "No record" : 
             `${pbMinutes.toString().padStart(2,0)} : ${pbSecond.toString().padStart(2,0)} : ${pbMillisecond.toString().padStart(2,0)}`) :
             `${minutes.toString().padStart(2,0)} : ${second.toString().padStart(2,0)} : ${millisecond.toString().padStart(2,0)}`}</p>
         </div>
