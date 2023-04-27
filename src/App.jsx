@@ -14,6 +14,7 @@ export default function App(){
     const sameValue = die.every(dice => dice.value === firstValue)
     if(locked && sameValue && die.length != 0){
       setTenzies(true)
+      setStart(false)
     }
   },[die])
 
@@ -28,6 +29,7 @@ export default function App(){
     }
     setDie(tempDie)
     setTenzies(false)
+    setStart(true)
   }
 
   function rollUnlocked(){
@@ -81,14 +83,14 @@ export default function App(){
   return (
     <div className="app-container">
       <h1>Tenzies</h1>
-      <Timer name="bestTime" start={start}/>
-      <Timer name="currentTime" start={start}/>
+      <Timer name="bestTime" start={start} tenzies={tenzies}/>
+      <Timer name="currentTime" start={start} tenzies={tenzies}/>
       <p>Roll until all dice are the same. Click each die to freeze it at its current value between rolls.</p>
       <div className="dice">{dices}</div>
       {die.length === 0 || tenzies ? 
       <button onClick={rollAll} className="play-button">{tenzies ? "Start Again" : "Start Game"}</button> : 
       <button onClick={rollUnlocked} className="play-button">Roll</button>}
-      {tenzies && <Confetti width={width-20} height={height-20}/>}
+      {tenzies && <Confetti width={width-30} height={height-30}/>}
     </div>
   )
 }
